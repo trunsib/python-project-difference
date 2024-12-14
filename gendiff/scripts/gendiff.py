@@ -5,8 +5,8 @@ from gendiff.cli import parser_arg
 
 
 def main():
-    args = parser_arg()
-    diff = generate_diff(args.first_file, args.second_file, args.format)
+    path_file1, path_file2, format_name = parser_arg()
+    diff = generate_diff(path_file1, path_file2, format_name)
     print(diff)
 
 
