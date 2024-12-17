@@ -1,3 +1,4 @@
+
 def create_plain(diff, path=''):
     result = []
     for node in diff:
