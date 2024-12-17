@@ -1,45 +1,57 @@
-def create_stylish(d_list, lvl=0):
-    res = []
-    res.append('{\n')
-    indent = ' ' * 2
-    indent = indent + indent * 2 * lvl
-    for node in d_list:
-        op = ' '
-        match node['status']:
-            case 'nested':
-                data = create_stylish(node['children'], lvl + 1)
-            case 'added':
-                data = сonvert_to_string(node['data'], indent)
-                op = '+'
-            case 'deleted':
-                data = сonvert_to_string(node['data'], indent)
-                op = '-'
-            case 'changed':
-                data = сonvert_to_string(node['data before'], indent)
-                res.append(f"{indent}- {node['name']}: {data}\n")
-                data = сonvert_to_string(node['data after'], indent)
-                op = '+'
-            case 'not changed':
-                data = сonvert_to_string(node['data'], indent)
-            case _:
-                raise ValueError('Invalid type!')
-        res.append(f"{indent}{op} {node['name']}: {data}\n")
-    res.append(indent[:-2] + '}')
-    return ''.join(res)
+INDENT = ' '
+SPACES_COUNT = 4
 
 
-def сonvert_to_string(data, indent):
-    if type(data) is dict:
-        ind = indent + '    '
-        res = '{\n'
-        for key in data.keys():
-            value = сonvert_to_string(data[key], indent)
-            res = res + ind + '  ' + key + ': ' + value + '\n'
-        res = res + indent[:-2] + '}'
-    elif data is False or data is True:
-        res = str(data).lower()
-    elif data is None:
-        res = 'null'
-    else:
-        res = str(data)
-    return res
+def create_stylish(diff, depth=0):
+    result = ['{']
+    offset = depth + SPACES_COUNT
+    for node in diff:
+
+        key, type = node.get('key'), node.get('type')
+        value, new_value = node.get('value'), node.get('new_value')
+        value_str = deep_line(value, depth)
+        new_value_str = deep_line(new_value, depth)
+
+        spaces = INDENT * (offset - 2)
+
+        added = f'{spaces}+ {key}: {value_str}'
+        removed = f'{spaces}- {key}: {value_str}'
+        samed = f'{spaces}  {key}: {value_str}'
+        changed = f'{spaces}+ {key}: {new_value_str}'
+
+        if type == 'add':
+            result.append(added)
+        elif type == 'remove':
+            result.append(removed)
+        elif type == 'same':
+            result.append(samed)
+        elif type == 'change':
+            result.append(removed)
+            result.append(changed)
+        elif type == 'children':
+            result.append(f'{INDENT * offset}{key}: '
+                          + create_stylish(value, offset))
+
+    result.append(f'{INDENT * depth + "}"}')
+    return '\n'.join(result)
+
+
+def deep_line(value, depth):
+    if not isinstance(value, dict):
+        return make_str(value)
+    lines = ['{']
+    for key in value.keys():
+        current = value[key]
+        format_key = f'{INDENT * (depth + SPACES_COUNT * 2)}{key}: '
+        if isinstance(current, dict):
+            lines.append(format_key
+                         + deep_line(current, depth + SPACES_COUNT))
+        else:
+            lines.append(format_key + make_str(current))
+    lines.append(f'{INDENT * (depth + SPACES_COUNT) + "}"}')
+    return '\n'.join(lines)
+
+
+def make_str(string_value):
+    return str(string_value).lower() if isinstance(string_value, bool) \
+        else "null" if string_value is None else str(string_value)

@@ -1,49 +1,33 @@
-def create_plain(d_list):
-    d_list.sort(key=lambda x: x['name'])
-    res = get_diff_plain(d_list)
-    return '\n'.join(res)
+def create_plain(diff, path=''):
+    result = []
+    for node in diff:
+
+        key, type = node.get('key'), node.get('type')
+        value, new_value = node.get('value'), node.get('new_value')
+        value_str = deep_line(value)
+        new_value_str = deep_line(new_value)
+
+        new_path = key if path == '' else f'{path}.{key}'
+        added = f"Property '{new_path}' was added with value: {value_str}"
+        removed = f"Property '{new_path}' was removed"
+        changed = f"Property '{new_path}' was updated. " \
+                  + f"From {value_str} to {new_value_str}"
+
+        if type == 'add':
+            result.append(added)
+        elif type == 'remove':
+            result.append(removed)
+        elif type == 'change':
+            result.append(changed)
+        elif type == 'children':
+            result.append(create_plain(value, new_path))
+    return '\n'.join(result)
 
 
-def get_diff_plain(d_list, path=''):
-    res = []
-    for node in d_list:
-        path_to_ch = path + node['name']
-        match node['status']:
-            case 'nested':
-                path_to_ch += '.'
-                diff = get_diff_plain(node['children'], path_to_ch)
-                res.extend(diff)
-            case 'added':
-                ch = сonvert_to_string(node['data'])
-                diff = (f"Property '{path_to_ch}' was added "
-                        f"with value: {ch}")
-                res.append(diff)
-            case 'deleted':
-                ch = сonvert_to_string(node['data'])
-                diff = "Property '{}' was removed".format(path_to_ch)
-                res.append(diff)
-            case 'changed':
-                ch_bef = сonvert_to_string(node['data before'])
-                ch_aft = сonvert_to_string(node['data after'])
-                diff = (f"Property '{path_to_ch}' was updated. "
-                        f"From {ch_bef} to {ch_aft}")
-                res.append(diff)
-            case 'not changed':
-                continue
-            case _:
-                raise ValueError('Invalid type!')
-    return res
+def deep_line(value):
+    if isinstance(value, dict):
+        return '[complex value]'
+    new_value = f"'{value}'" if isinstance(value, str) else value
 
-
-def сonvert_to_string(data):
-    if type(data) is dict or type(data) is list:
-        res = '[complex value]'
-    elif data is False or data is True:
-        res = str(data).lower()
-    elif data is None:
-        res = 'null'
-    elif type(data) is str:
-        res = "'{}'".format(data)
-    else:
-        res = '{}'.format(data)
-    return res
+    return str(new_value).lower() if isinstance(new_value, bool) \
+        else "null" if new_value is None else str(new_value)

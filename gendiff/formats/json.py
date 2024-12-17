@@ -1,5 +1,5 @@
 import json
 
 
-def create_json(d_list):
-    return json.dumps(d_list, indent=4)
+def create_json(diff):
+    return json.dumps(diff, indent=4)

@@ -10,4 +10,4 @@ def format_diff(l_diff, f_name):
         return create_plain(l_diff)
     elif f_name == 'json':
         return create_json(l_diff)
-    raise ValueError('Format not found')
+    raise ValueError('Format not found!')
