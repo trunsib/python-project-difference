@@ -3,10 +3,10 @@ import yaml
 import os.path as path
 
 
-def get_data(file_path):
-    with open(file_path, 'r') as file:
+def get_data(filepath1):
+    with open(filepath1, 'r') as file:
         data = file.read()
-        extension = path.splitext(file_path)[1]
+        extension = path.splitext(filepath1)[1]
     return parse(data, extension)
 
 
