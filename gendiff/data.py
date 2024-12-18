@@ -1,19 +1,21 @@
+import os
 import json
 import yaml
-import os.path as path
+from pathlib import Path
 
 
-def get_data(file_path):
-    with open(file_path, 'r') as file:
-        data = file.read()
-        extension = path.splitext(file_path)[1]
-    return parse(data, extension)
+def get_dict_from_file(path_file):
+    file_ext = Path(path_file).suffix
+    path_file = Path() / 'tests/fixtures' / os.path.basename(path_file)
+    with open(path_file) as f:
+        s = f.read()
+    return open_file(s, file_ext)
 
 
-def parse(data, extension):
-    if extension == 'json':
-        return json.loads(data)
-    elif extension == 'yml' or 'yaml':
-        return yaml.safe_load(data)
+def open_file(s, file_ext):
+    if file_ext.lower() == '.json':
+        return json.loads(s)
+    elif file_ext.lower() == '.yml' or file_ext.lower() == '.yaml':
+        return yaml.safe_load(s)
     else:
-        raise ValueError('Unknown extension')
+        raise ValueError('This file type is not supported!')
