@@ -9,14 +9,14 @@ def get_data(path_file):
     path_file = Path() / 'tests/fixtures' / os.path.basename(path_file)
     with open(path_file) as f:
         s = f.read()
-    return open_file(s, file_ext)
+    return parse(s, file_ext)
 
 
-def open_file(s, file_ext):
-    if file_ext.lower() == '.json':
-        return json.loads(s)
-    elif file_ext.lower() == '.yml' or file_ext.lower() == '.yaml':
-        return yaml.safe_load(s)
+def parse(data, extension):
+    if extension == 'json':
+        return json.loads(data)
+    elif extension == 'yml' or 'yaml':
+        return yaml.safe_load(data)
     else:
-        raise ValueError('This file type is not supported!')
+        raise ValueError('Unknown extension')
     
