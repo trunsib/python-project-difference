@@ -17,4 +17,3 @@ def parse(data, extension):
         return yaml.safe_load(data)
     else:
         raise ValueError('Unknown extension')
-    
