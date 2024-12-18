@@ -2,6 +2,7 @@ import os
 import json
 import yaml
 from pathlib import Path
+import os.path as path
 
 
 def get_data(path_file):
