@@ -19,3 +19,4 @@ def open_file(s, file_ext):
         return yaml.safe_load(s)
     else:
         raise ValueError('This file type is not supported!')
+    
