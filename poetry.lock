@@ -28,21 +28,6 @@ files = [
 ]
 
 [[package]]
-name = "path"
-version = "17.0.0"
-description = "A module wrapper for os.path"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "path-17.0.0-py3-none-any.whl", hash = "sha256:b7309739c569e30110a34c6c812e582c09ff504c43e1232817410181838918ed"},
-    {file = "path-17.0.0.tar.gz", hash = "sha256:e1540261d22df1416fb1b498b3b1ed5353a371a48fe197d66611bb01e7fab2d5"},
-]
-
-[package.extras]
-doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
-test = ["appdirs", "more-itertools", "packaging", "pygments", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-mypy", "pytest-ruff (>=0.2.1)", "pywin32"]
-
-[[package]]
 name = "pycodestyle"
 version = "2.12.1"
 description = "Python style guide checker"
@@ -129,4 +114,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "eed5df7ac8d2c8db4cdcbcb9aba698b7991c8e0e0de30d1cde0422395003bccd"
+content-hash = "8ae543679eec647ac7cc81afce1e5193f6be9b98a9d64cc32d0bf669748c06c3"
