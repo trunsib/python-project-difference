@@ -4,7 +4,7 @@ import yaml
 from pathlib import Path
 
 
-def get_dict_from_file(path_file):
+def get_data(path_file):
     file_ext = Path(path_file).suffix
     path_file = Path() / 'tests/fixtures' / os.path.basename(path_file)
     with open(path_file) as f:
