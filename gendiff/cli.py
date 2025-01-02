@@ -9,4 +9,4 @@ def arg_parser():
     parser.add_argument('-f', '--format', default='stylish',
                         help='set format of output')
 
-    return parser.arg_parser()
+    return parser.parse_args()
