@@ -1,19 +1,12 @@
-import json
-import yaml
-import os.path as path
+import argparse
 
 
-def get_data(file_path):
-    with open(file_path, 'r') as file:
-        data = file.read()
-        extension = path.splitext(file_path)[1]
-    return parse(data, extension)
+def cli_parse():
+    parser = argparse.ArgumentParser(description='Compares two configuration \
+    files and shows a difference.')
+    parser.add_argument('first_file')
+    parser.add_argument('second_file')
+    parser.add_argument('-f', '--format', default='stylish',
+                        help='set format of output')
 
-
-def parse(data, extension):
-    if extension == 'json':
-        return json.loads(data)
-    elif extension == 'yml' or 'yaml':
-        return yaml.safe_load(data)
-    else:
-        raise ValueError('Unknown extension')
+    return parser.parse_args()
