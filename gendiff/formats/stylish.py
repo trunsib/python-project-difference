@@ -2,7 +2,7 @@ INDENT = ' '
 SPACES_COUNT = 4
 
 
-def create_stylish(diff, depth=0):
+def stylish(diff, depth=0):
     result = ['{']
     offset = depth + SPACES_COUNT
     for node in diff:
@@ -30,7 +30,7 @@ def create_stylish(diff, depth=0):
             result.append(changed)
         elif type == 'children':
             result.append(f'{INDENT * offset}{key}: '
-                          + create_stylish(value, offset))
+                          + stylish(value, offset))
 
     result.append(f'{INDENT * depth + "}"}')
     return '\n'.join(result)

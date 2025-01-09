@@ -1,5 +1,4 @@
-
-def create_plain(diff, path=''):
+def plain(diff, path=''):
     result = []
     for node in diff:
 
@@ -21,7 +20,7 @@ def create_plain(diff, path=''):
         elif type == 'change':
             result.append(changed)
         elif type == 'children':
-            result.append(create_plain(value, new_path))
+            result.append(plain(value, new_path))
     return '\n'.join(result)
 
 
