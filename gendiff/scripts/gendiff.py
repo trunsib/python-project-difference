@@ -4,8 +4,8 @@ from gendiff.generate_diff import generate_diff
 
 
 def main():
-    path1, path2, format = parse_cli()
-    print(generate_diff(path1, path2, format))
+    path1, path2, formating = parse_cli()
+    print(generate_diff(path1, path2, formating))
 
 
 if __name__ == '__main__':
