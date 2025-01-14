@@ -1,4 +1,4 @@
-def diff(d1, d2):
+def get_diff(d1, d2):
     res = []
     keys = sorted(d1.keys() | d2.keys())
     for key in keys:
