@@ -1,6 +1,6 @@
 from gendiff.diff import get_diff
 from gendiff.data import get_data
-from gendiff.formats.format import format_diff
+from gendiff.formats import format
 
 
 def generate_diff(first_file_path, second_file_path, format_name='stylish'):
@@ -8,4 +8,4 @@ def generate_diff(first_file_path, second_file_path, format_name='stylish'):
     data2 = get_data(second_file_path)
     diff = get_diff(data1, data2)
 
-    return format_diff(diff, format_name)
+    return format(diff, format_name)
