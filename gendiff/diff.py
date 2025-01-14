@@ -11,7 +11,7 @@ def get_diff(d1, d2):
             node['data'] = d1[key]
         elif type(d1[key]) is dict and type(d2[key]) is dict:
             node['status'] = 'nested'
-            node['children'] = diff(d1[key], d2[key])
+            node['children'] = get_diff(d1[key], d2[key])
         elif d1[key] == d2[key]:
             node['status'] = 'not changed'
             node['data'] = d1[key]
