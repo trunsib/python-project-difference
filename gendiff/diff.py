@@ -1,23 +1,23 @@
-def get_diff(d1, d2):
+def get_diff(data1, data2):
     res = []
-    keys = sorted(d1.keys() | d2.keys())
+    keys = sorted(data1.keys() | data2.keys())
     for key in keys:
         node = {'name': key}
-        if key not in d1:
+        if key not in data1:
             node['status'] = 'added'
-            node['data'] = d2[key]
-        elif key not in d2:
+            node['data'] = data2[key]
+        elif key not in data2:
             node['status'] = 'deleted'
-            node['data'] = d1[key]
-        elif type(d1[key]) is dict and type(d2[key]) is dict:
+            node['data'] = data1[key]
+        elif type(data1[key]) is dict and type(data2[key]) is dict:
             node['status'] = 'nested'
-            node['children'] = get_diff(d1[key], d2[key])
-        elif d1[key] == d2[key]:
+            node['children'] = get_diff(data1[key], data2[key])
+        elif data1[key] == data2[key]:
             node['status'] = 'not changed'
-            node['data'] = d1[key]
+            node['data'] = data1[key]
         else:
             node['status'] = 'changed'
-            node['data before'] = d1[key]
-            node['data after'] = d2[key]
+            node['data before'] = data1[key]
+            node['data after'] = data2[key]
         res.append(node)
     return res
