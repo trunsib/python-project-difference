@@ -4,8 +4,8 @@ from gendiff import generate_diff
 
 
 def main():
-    args = parse_cli()
-    diff = generate_diff(args.first_file, args.second_file, args.format)
+    path_file1, path_file2, format_name = parse_cli()
+    diff = generate_diff(path_file1, path_file2, format_name)
     print(diff)
 
 
