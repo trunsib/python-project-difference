@@ -1,4 +1,4 @@
-from gendiff.formats import stylish, plain, create_json
+from gendiff.formats import stylish, plain, make_json
 
 
 def formating(diff, format_name):
@@ -7,6 +7,6 @@ def formating(diff, format_name):
     elif format_name == 'plain':
         return plain.plain(diff)
     elif format_name == 'json':
-        return create_json.make_json(diff)
+        return make_json.make_json(diff)
     else:
         raise ValueError('Unknown format')
