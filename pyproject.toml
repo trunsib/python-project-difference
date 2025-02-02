@@ -16,6 +16,8 @@ gendiff = "gendiff.scripts.gendiff:main"
 python = "^3.10"
 pyyaml = "^6.0.2"
 pytest = "^8.3.4"
+path = "^17.1.0"
+yml = "^0.0.1"
 
 
 [tool.poetry.group.dev.dependencies]
